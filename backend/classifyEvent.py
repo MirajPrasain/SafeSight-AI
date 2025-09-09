@@ -20,14 +20,39 @@ EVENT_ANALYZE_FUNCTIONS: Dict[str, Callable[[List[Dict[str, Any]], bool], Analyz
     # Add other mappings for "smoke", "drowning", etc.
 }
 
+def _get_frame(source: str) -> np.ndarray:
+    """
+    Captures a single frame from the specified source.
+    
+    Args:
+        source: The source of the video feed (e.g., "webcam", "file").
+    
+    Returns:
+        A single video frame as a numpy array.
+    """
+    if source == "webcam":
+        cap = cv2.VideoCapture(0)
+    elif source.endswith(('.mp4', '.avi')):  # Check for common video file extensions
+        cap = cv2.VideoCapture(source)
+    else:
+        raise ValueError("Unsupported video source type.")
+
+    if not cap.isOpened():
+        raise IOError(f"Could not open video source: {source}")
+
+    ret, frame = cap.read()
+    cap.release()
+    
+    if not ret:
+        raise IOError("Failed to read frame from video source.")
+
+    return frame
+
 def classifyEvent(req: AnalyzeRequest) -> AnalyzeResponse:
     """
     Classifies emergency events based on real-time vision analysis.
     
-    This function acts as the central orchestrator:
-    1. It captures a video frame.a
-    2. It sends the frame to the VisionEngine (Perception Layer).
-    3. It routes the raw detections to the correct event analysis handler (Reasoning Layer).
+    This function acts as the central orchestrator, handling multiple input sources.
     
     Args:
         req: Analysis request containing source and mock flag.
@@ -37,16 +62,7 @@ def classifyEvent(req: AnalyzeRequest) -> AnalyzeResponse:
     """
     try:
         # Step 1: Perception - Capture frame and get raw detections from the Vision Engine
-        cap = cv2.VideoCapture(0)
-        if not cap.isOpened():
-            raise IOError("Could not open webcam.")
-        
-        ret, frame = cap.read()
-        cap.release()
-        
-        if not ret:
-            raise IOError("Failed to read frame from webcam.")
-            
+        frame = _get_frame(req.source)
         raw_detections = vision_engine.analyze_frame(frame)
         
         # Initialize an empty list to store all detected event responses
