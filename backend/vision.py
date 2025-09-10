@@ -30,7 +30,7 @@ class VisionEngine:
             into our Pydantic schema.
         """
         # The stream=True argument is key for real-time video processing.
-        # It's a generator that is memory-efficient.
+        # It's a generator object that is memory-efficient. avoids loading all result object (for each video frame) into memory at once, 
         results = self.model(frame, stream=True, verbose=False) 
         
         detections = []

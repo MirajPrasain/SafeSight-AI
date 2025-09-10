@@ -1,14 +1,19 @@
-from schema import AnalyzeRequest, AnalyzeResponse, Evidence, Event, Box
+from schema import AnalyzeResponse, Evidence, Event, Box
+from typing import List, Dict, Any
 
 
-def analyze_drowning(req: AnalyzeRequest) -> AnalyzeResponse:
+def analyze_drowning(detections: List[Dict[str, Any]], mock: bool = False) -> AnalyzeResponse:
     """
-    Lesson-1 stub:
-    - If req.mock is True, return a deterministic 'drowning' scenario.
-    - Otherwise, return a neutral low-severity response.
-    Later lessons plug real model outputs here.
+    Analyzes raw detections to determine if a drowning event has occurred.
+    
+    Args:
+        detections: A list of structured dictionaries from the VisionEngine.
+        mock: If True, returns a mock response for testing.
+        
+    Returns:
+        An AnalyzeResponse object.
     """
-    if req.mock:
+    if mock:
         evid = Evidence(
             boxes=[Box(x=200, y=150, w=100, h=80)],
             scene="pool",
@@ -44,10 +49,3 @@ def analyze_drowning(req: AnalyzeRequest) -> AnalyzeResponse:
         events=[],
     )
 
-
-def calculate_drowning_severity(req: AnalyzeRequest) -> AnalyzeResponse:
-    """
-    Calculate drowning severity based on detection confidence and scene context.
-    """
-    # Placeholder for future implementation
-    return analyze_drowning(req)

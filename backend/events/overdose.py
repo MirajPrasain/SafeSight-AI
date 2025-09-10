@@ -1,14 +1,19 @@
-from schema import AnalyzeRequest, AnalyzeResponse, Evidence, Event, Box
+from schema import AnalyzeResponse, Evidence, Event, Box
+from typing import List, Dict, Any
 
 
-def analyze_overdose(req: AnalyzeRequest) -> AnalyzeResponse:
+def analyze_overdose(detections: List[Dict[str, Any]], mock: bool = False) -> AnalyzeResponse:
     """
-    Lesson-1 stub:
-    - If req.mock is True, return a deterministic 'overdose' scenario.
-    - Otherwise, return a neutral low-severity response.
-    Later lessons plug real model outputs here.
+    Analyzes raw detections to determine if an overdose event has occurred.
+    
+    Args:
+        detections: A list of structured dictionaries from the VisionEngine.
+        mock: If True, returns a mock response for testing.
+        
+    Returns:
+        An AnalyzeResponse object.
     """
-    if req.mock:
+    if mock:
         evid = Evidence(
             boxes=[Box(x=80, y=200, w=120, h=100)],
             scene="indoor",
@@ -44,10 +49,3 @@ def analyze_overdose(req: AnalyzeRequest) -> AnalyzeResponse:
         events=[],
     )
 
-
-def calculate_overdose_severity(req: AnalyzeRequest) -> AnalyzeResponse:
-    """
-    Calculate overdose severity based on detection confidence and scene context.
-    """
-    # Placeholder for future implementation
-    return analyze_overdose(req)
