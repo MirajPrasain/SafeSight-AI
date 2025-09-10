@@ -1,10 +1,23 @@
 # Use an official Python runtime as a parent image.
 # This gives you a pre-built environment with Python installed.
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Set the working directory inside the container.
 # All subsequent commands will be run from this directory.
 WORKDIR /app
+
+# Install system dependencies required for OpenCV
+# These libraries are needed even for headless OpenCV processing
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libgl1-mesa-dri \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libgthread-2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt .

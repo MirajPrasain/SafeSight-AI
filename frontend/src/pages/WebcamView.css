@@ -1,0 +1,215 @@
+/* WebcamView.css - Styles for live webcam monitoring */
+
+.webcam-view {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.webcam-header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-link {
+  position: absolute;
+  left: 1rem;
+  top: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.webcam-header h1 {
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.webcam-header p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 1rem 0;
+  opacity: 0.9;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-online {
+  background-color: #4CAF50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.status-offline {
+  background-color: #f44336;
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+}
+
+.webcam-main {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.alert {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.alert-danger {
+  background-color: rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(244, 67, 54, 0.5);
+  color: #ffcdd2;
+}
+
+.stream-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button.primary {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.button.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.button.secondary {
+  background: linear-gradient(45deg, #f44336, #d32f2f);
+  color: white;
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.button.secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+}
+
+.video-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.stream-video {
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.detection-results {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.detection-results h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.event-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #4CAF50;
+}
+
+.event-item strong {
+  color: #4CAF50;
+  font-size: 1.1rem;
+}
+
+.confidence {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .webcam-header h1 {
+    font-size: 2rem;
+  }
+  
+  .webcam-header p {
+    font-size: 1rem;
+  }
+  
+  .stream-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .back-link {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-bottom: 1rem;
+  }
+}
+
