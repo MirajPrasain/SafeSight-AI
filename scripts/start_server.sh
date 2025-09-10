@@ -14,3 +14,4 @@ echo "Press Ctrl+C to stop the server"
 echo ""
 
 python3 -m uvicorn app:app --reload --host 127.0.0.1 --port 8001
+
