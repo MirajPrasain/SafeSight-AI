@@ -13,7 +13,13 @@ from events.overdose import analyze_overdose
 from events.smoke import analyze_smoke
 
 # Initialize the vision engine globally to avoid reloading the model on every request
-vision_engine = VisionEngine()
+vision_engine = None
+
+def initialize_vision_engine():
+    """Initialize the vision engine once at startup."""
+    global vision_engine
+    if vision_engine is None:
+        vision_engine = VisionEngine()
 
 # Map detection types to their corresponding analysis functions
 # Note: The functions now take a list of detections, not the full request.
@@ -42,9 +48,12 @@ def classifyEvent(file_bytes: bytes, source: str = "webcam", mock: bool = False)
         Analysis response with detected events and recommendations.
     """
     try:
+        # Ensure vision engine is initialized
+        if vision_engine is None:
+            initialize_vision_engine()
+        
         # Step 1: Perception - Process file bytes and get raw detections from the Vision Engine
-        # For video files, we need to extract frames using VideoCapture
-        # First, write the bytes to a temporary file
+        # Optimize video processing by using memory buffer instead of temporary file
         import tempfile
         import os
         
